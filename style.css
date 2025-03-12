@@ -1,0 +1,131 @@
+#chatBox {
+    position: fixed;
+    bottom: 20px;
+    right: 18px;
+    width: 250px;
+    height: 300px;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    resize: both;
+    overflow: hidden;
+    min-width: 50px;
+    min-height: 40px;
+    transition: width 0.3s, height 0.3s;
+}
+
+#resizeHandle {
+    width: 15px;
+    height: 15px;
+    background-color: #007bff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: nwse-resize;
+    border-top-left-radius: 10px;
+}
+
+/* Header */
+.chat-header {
+    background-color: #007bff;
+    color: white;
+    padding: 1px 10px;
+    display: grid;
+    grid-template-columns: 1fr auto auto; /* 1fr for chat text, auto for buttons */
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+/* Style for close and toggle buttons */
+#toggleChat, #closeBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    padding: 1px;
+    margin: 1px;
+}
+
+#toggleChat:hover, #closeBtn:hover {
+    opacity: 0.8;
+}
+
+/* Chrome-style toggle icon */
+#toggleChat::before {
+    content: '';
+    font-size: 16px;
+}
+
+/* Collapsed state - Only show header */
+.collapsed {
+    width: 50px !important;
+    height: 40px !important;
+    overflow: hidden;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+/* Hide everything except header when collapsed */
+.collapsed .chat-body,
+.collapsed .chat-footer {
+    display: none;
+}
+
+/* Adjust header when collapsed */
+.collapsed .chat-header {
+    justify-content: space-between;
+    padding: 5px;
+}
+
+/* Keep buttons visible in collapsed mode */
+.collapsed .chat-header-buttons {
+    display: flex;
+}
+
+/* When collapsed, change toggle icon */
+.collapsed #toggleChat::before {
+    content: '';
+}
+
+/* Chat Body */
+.chat-body {
+    flex-grow: 1; /* Allow chat body to take up remaining space */
+    overflow-y: auto; /* Add scroll if content overflows */
+    padding: 5px;
+}
+
+/* Chat Footer */
+.chat-footer {
+    display: flex;
+    padding: 5px;
+    border-top: 1px solid #ccc; /* Add a top border for separation */
+}
+
+.chat-footer input[type="text"] {
+    flex-grow: 1; /* Allow input to take up available space */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.chat-footer button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
