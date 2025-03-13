@@ -3,7 +3,8 @@
   "description": "Base Level Extension",
   "version": "1.0",
   "manifest_version": 3,
-  "premissions": ["activeTap", "scripting", "storage"],
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": ["*://*/*"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "only_laza.jpeg"
@@ -16,6 +17,7 @@
       "js": [
         "content.js"
       ],
+      "type": "module",
       "css": ["style.css"],
       "run_at": "document_idle"
     }
@@ -25,5 +27,12 @@
       "resources": ["style.css"],
       "matches": ["<all_urls>"]
     }
-  ]
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "background": {
+    "service_worker": "gpt_playground.js",
+    "type": "module"
+  }
 }

@@ -1,4 +1,9 @@
 // For browser extensions
+
+const firstPromptMessage = 'Read the following question. In the following conversation the user going to ask you ' +
+    'hints and explanations how to solve it. be explanatory and kind and help him in every question he has.' +
+    ' do not give him a full solution unless he asks for it. try to only answer what he asked you. Your goal is that we will learn.';
+
 function loadChatboxStyles() {
     if (!document.getElementById('chatbox-styles')) {
         console.log("Loading chatbox styles...");
@@ -49,18 +54,47 @@ if (!document.getElementById('chatBox')) {
     // Append chatbox to the page
     document.body.appendChild(chatBox);
 
+    const chatBody = chatBox.querySelector('.chat-body'); // Select chat body
+    const welcomeMessage = document.createElement('div');
+    welcomeMessage.textContent = "Hello my name is Mikasa and I will be your AI assistant for the question if you need any help feel free to ask.";
+    welcomeMessage.classList.add('mikasa-message'); // Add class for styling
+    chatBody.appendChild(welcomeMessage);
+
     // Event Listeners
-    document.getElementById('sendBtn').addEventListener('click', function () {
-        const chatInput = document.getElementById('chatInput');
-        const chatContent = document.getElementById('chatContent');
+    const sendBtn = document.getElementById('sendBtn')
+    sendBtn.addEventListener('click', function () {
+        const chatInput = chatBox.querySelector('.chat-footer input[type="text"]');
+        const chatContent = chatBox.querySelector('.chat-body');
         const message = chatInput.value.trim();
         if (message) {
-            const messageElement = document.createElement('div');
-            messageElement.textContent = `You: ${message}`;
-            chatContent.appendChild(messageElement);
+            const userMessage = document.createElement('div');
+            userMessage.textContent = `You: ${message}`;
+            userMessage.classList.add('user-message'); // Add class for styling
+            chatContent.appendChild(userMessage);
             chatContent.scrollTop = chatContent.scrollHeight;
             chatInput.value = '';
         }
+        setTimeout(async () => {
+            chrome.runtime.sendMessage(
+                { type: "getAiResponse", message: message, reasoning_effort: 'high' },
+                (response) => {
+                    console.log("Response from background:", response);
+
+                    const mikasaResponse = document.createElement('div');
+                    if (response && response.response) {
+                        mikasaResponse.textContent = response.response; // Set textContent from the response
+                    } else if (response && response.error) {
+                        mikasaResponse.textContent = `Mikasa: Error: ${response.error}`; // Handle error
+                    } else {
+                        mikasaResponse.textContent = "Mikasa: No response received."; // Handle no response
+                    }
+
+                    mikasaResponse.classList.add('mikasa-message');
+                    chatContent.appendChild(mikasaResponse);
+                    chatContent.scrollTop = chatContent.scrollHeight; // Scroll to bottom
+                }
+            );
+        }, 2000); // Simulate a 1-second delay
     });
 
     document.getElementById('closeBtn').addEventListener('click', function () {
@@ -73,11 +107,9 @@ if (!document.getElementById('chatBox')) {
         chatBox.classList.toggle("collapsed");
     });
 }
-
 resizeHandle.addEventListener("mousedown", (e) => {
     e.preventDefault();
-    isResizing = true;
-
+    let isResizing = true;
     let startX = e.clientX;
     let startY = e.clientY;
     let startWidth = chatBox.offsetWidth;
@@ -103,15 +135,26 @@ resizeHandle.addEventListener("mousedown", (e) => {
     window.addEventListener("mouseup", onMouseUp);
 });
 
+
 window.onload = function () {
-    setTimeout(() => {
+    setTimeout(async () => {
         // Select the question content
         let question = document.querySelectorAll('div > div.flex.w-full.flex-1.flex-col.gap-4.overflow-y-auto.px-4.py-5 > div:nth-child(3) > div');
         if (question) {
             let questionText = Array.from(question).map(p => p.innerText).join("\n");
+            let message = firstPromptMessage + questionText
+
+            chrome.runtime.sendMessage({ type: "addMessageToHistory", message: message,
+                },   (response) => {
+                console.log("Response from background:", response);
+            })
             console.log("Extracted Question:", questionText);
         } else {
             console.log("Question not found! The page structure might have changed.");
         }
     }, 2000); // Delay to ensure content loads
 };
+
+setInterval(() => {
+    chrome.runtime.sendMessage({ type: "keepAlive" });
+}, 25000); // Before 30 seconds shutdown

@@ -129,3 +129,17 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.user-message {
+    background-color: #e0f7fa; /* Light blue for user messages */
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.mikasa-message {
+    background-color: #f0f0f0; /* Light gray for Mikasa messages */
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
