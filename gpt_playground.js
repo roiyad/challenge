@@ -3,6 +3,10 @@
 const sessionHistories = {};
 const MODEL_VERSION = "gpt-4o";
 
+
+// chrome.storage.local.set({ OPENAI_API_KEY: "YOUR_OPENAI_API_KEY" }, function() {
+//     console.log("API Key stored!");
+// });
 /**
  * Handles API requests to OpenAI
  */
