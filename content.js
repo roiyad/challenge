@@ -52,6 +52,9 @@ if (!document.getElementById('chatBox')) {
     </div>
 `;
     // Append chatbox to the page
+
+    let last_code = ''
+
     document.body.appendChild(chatBox);
 
     const chatBody = chatBox.querySelector('.chat-body'); // Select chat body
@@ -68,11 +71,27 @@ if (!document.getElementById('chatBox')) {
         const message = chatInput.value.trim();
         if (message) {
             const userMessage = document.createElement('div');
-            userMessage.textContent = `You: ${message}`;
+            userMessage.innerHTML = `<strong>User:</strong> ${message} `;
             userMessage.classList.add('user-message'); // Add class for styling
             chatContent.appendChild(userMessage);
             chatContent.scrollTop = chatContent.scrollHeight;
             chatInput.value = '';
+        }
+
+        let code = document.querySelectorAll('#editor > div.flex.flex-1.flex-col.overflow-hidden.pb-2 > div.flex-1.overflow-hidden > div > div > div.overflow-guard > div.monaco-scrollable-element.editor-scrollable.vs > div.lines-content.monaco-editor-background > div.view-lines.monaco-mouse-cursor-text')
+        if (code) {
+            let writtenCode = Array.from(code).map(p => p.innerText).join("\n");
+            if (writtenCode !== last_code) {
+                let userWrittenCodeMessage = 'This is the user code save it as an input in case he asks you about his code. ' +
+                    'Very important do not mention the written code unless the user ask for it :\n\n' + writtenCode
+                console.log('code has been sent\n')
+                chrome.runtime.sendMessage({type: "sendWrittenCode", message: userWrittenCodeMessage,
+                });
+            }
+            console.log('this is the written Code: ', writtenCode, )
+        }
+        else {
+            console.log('Cant find the written code')
         }
         setTimeout(async () => {
             chrome.runtime.sendMessage(
@@ -82,11 +101,11 @@ if (!document.getElementById('chatBox')) {
 
                     const mikasaResponse = document.createElement('div');
                     if (response && response.response) {
-                        mikasaResponse.textContent = response.response; // Set textContent from the response
+                        mikasaResponse.innerHTML  =  `<strong>Mikasa:</strong> ${response.response}`; // Set textContent from the response
                     } else if (response && response.error) {
-                        mikasaResponse.textContent = `Mikasa: Error: ${response.error}`; // Handle error
+                        mikasaResponse.textContent = `<strong>Mikasa: Error:</strong> ${response.error}`; // Handle error
                     } else {
-                        mikasaResponse.textContent = "Mikasa: No response received."; // Handle no response
+                        mikasaResponse.textContent = `<strong>Mikasa:</strong> No response received.`; // Handle no response
                     }
 
                     mikasaResponse.classList.add('mikasa-message');
@@ -156,5 +175,8 @@ window.onload = function () {
 };
 
 setInterval(() => {
+
     chrome.runtime.sendMessage({ type: "keepAlive" });
+
 }, 25000); // Before 30 seconds shutdown
+
