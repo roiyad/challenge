@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedVariable
+
 const sessionHistories = {};
 const MODEL_VERSION = "gpt-4o";
 
@@ -54,7 +56,7 @@ function parseMarkdown(text) {
         .replace(/_(.+?)_/g, '<i>$1</i>')
         .replace(/^- (.+)$/gm, '<ul><li>$1</li></ul>')
         .replace(/^\d+\. (.+)$/gm, '<ol><li>$1</li></ol>')
-        .replace(/^([^#<\*\-\d\s].*?)(\n|$)/gm, '<p>$1</p>');
+        .replace(/^([^#<*\-\d\s].*?)(\n|$)/gm, '<p>$1</p>');
 }
 
 /**
@@ -67,7 +69,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         case "getAiResponse":
         case "sendWrittenCode":
             chrome.storage.local.get("OPENAI_API_KEY", (result) => {
-                handleApiRequest(sendResponse, result.OPENAI_API_KEY, sender, request, request.type === "sendWrittenCode" ? "assistant" : "user");
+                void handleApiRequest(sendResponse, result.OPENAI_API_KEY, sender, request, request.type === "sendWrittenCode" ? "assistant" : "user");
             });
             return true; // Asynchronous response
 
@@ -77,7 +79,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             return true;
 
         case "keepAlive":
-            console.log("Keeping service worker alive...");
+            sendResponse({response: "The service is working"})
             return true;
     }
     return false; // Unhandled messages

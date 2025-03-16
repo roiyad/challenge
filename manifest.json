@@ -6,7 +6,6 @@
   "permissions": ["storage", "activeTab", "scripting"],
   "host_permissions": ["*://*/*"],
   "action": {
-    "default_popup": "popup.html",
     "default_icon": "only_laza.jpeg"
   },
   "content_scripts": [
