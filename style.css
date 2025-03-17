@@ -129,3 +129,88 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.user-message {
+    background-color: #e0f7fa; /* Light blue for user messages */
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
+.user-message strong {
+    font-weight: bold;
+    color: darkgoldenrod;
+}
+
+.user-message p {
+    margin-bottom: 1em;
+}
+
+
+/* General Mikasa message styles */
+.mikasa-message {
+    background-color: #f0f0f0; /* Light gray for Mikasa messages */
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+/* Style headings within mikasa-message */
+.mikasa-message h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.mikasa-message h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+/* Style bold and italic text within mikasa-message */
+.mikasa-message b, .mikasa-message strong {
+    font-weight: bold;
+}
+
+.mikasa-message i, .mikasa-message em {
+    font-style: italic;
+}
+
+/* Style lists within mikasa-message */
+.mikasa-message ol, .mikasa-message ul {
+    margin-left: 2em;
+    margin-bottom: 1em;
+}
+
+.mikasa-message li {
+    margin-bottom: 0.5em;
+}
+
+/* Style code blocks within mikasa-message */
+.mikasa-message pre {
+    background-color: #e0e0e0; /* Slightly darker gray for code blocks */
+    padding: 1em;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin-bottom: 1em;
+}
+
+.mikasa-message code {
+    font-family: monospace;
+}
+
+/* Style paragraphs within mikasa-message */
+.mikasa-message p {
+    margin-bottom: 1em;
+}
+
+/* Style math within mikasa-message */
+.mikasa-message .math-inline {
+    font-style: italic;
+}
+
+.mikasa-message .math-display {
+    display: block;
+    text-align: center;
+    margin-bottom: 1em;
+}

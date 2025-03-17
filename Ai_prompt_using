@@ -1,0 +1,51 @@
+I had no prior experience writing Chrome extensions, and I hadn’t coded in JavaScript since my bachelor's degree.
+
+To get started, I read Google's official documentation on creating Chrome extensions. Their explanations were clear, so the initial steps were relatively easy.
+
+Next, I wanted to extract the question text from LeetCode. I asked Gemini, GPT, and Claude using the following prompt:
+
+** I'm building a Chrome extension and want to extract the question from LeetCode using JavaScript.
+
+Unfortunately, none of them provided a good solution. So, I turned to YouTube and Stack Overflow, where I learned how to inspect HTML properly and find the right class name for extraction.
+
+After that, I asked ChatGPT to generate a chat interface for the right side of the screen:
+
+** Build me a chat for the right side of the screen.
+
+The code it provided worked but was quite messy. When I tried refactoring it with GPT, Gemini, or Claude, they all struggled to account for the Chrome extension environment. One major issue was that the CSS styling was hardcoded into the content script, whereas I wanted it in a separate file. After some Google searches, I discovered the issue wasn’t with the code itself but with the manifest file—something the AI models didn’t catch.
+
+Once I resolved that, I focused on UI improvements:
+
+I want the chat to have a white background, be resizable, and allow the user to toggle it up or down.
+The resize handle should be on the upper left side of the chat.
+When toggling the chat, only the blue button should remain visible, and any extra blank space should disappear.
+
+Despite several CSS modifications, the styling didn’t work as expected. However, after a few tweaks, I grasped the basics and got it to function the way I wanted.
+
+Next, I tackled the integration with the ChatGPT API:
+
+** Can you write code to send user messages to the ChatGPT API?
+
+The AI provided a solid implementation, but I complicated things by requesting SDK integration. This led to multiple issues due to Chrome’s restrictions on imports. After extensive internet searches and AI discussions, I abandoned the SDK approach and reverted to the standard request method.
+
+I then addressed API key security:
+
+** Give me a secure way to store the API key in my Chrome extension.
+
+ChatGPT provided four solutions, ranked by security and workload. I preferred the .env method, but it didn’t work within the Chrome extension environment. Ultimately, I opted for Chrome’s storage API.
+
+For maximum security for a real world product I would use one of the two solutions
+** The user will enter his API security key I will encrypt it and store at the google local storage from the background running file
+** Will use a proxy server and will use the security key only there
+
+Once everything was running, I encountered a new issue—the worker process kept shutting down. The AI suggested using return true for asynchronous functions, but that wasn’t the real problem. I later found on Stack Overflow that Chrome automatically terminates inactive workers after 30 seconds. ChatGPT then helped me implement a function to keep it alive.
+
+Finally, I focused on refining the UI and fixing minor issues:
+
+** I want to add text color styling—black for "Mikasa" and dark yellow for the user.
+** My CSS file shows a warning: "Selector toggleChat is never used," but I know it is. How do I fix this?
+** I get a warning for chrome.runtime.getURL("style.css"): "Unresolved function or method sendMessage()." How do I solve it?
+** Can you refactor content.js for me? (I did this twice.)
+** Can you refactor gpt_playground.js?
+
+After implementing these refinements, my Chrome extension was finally working as intended.

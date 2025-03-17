@@ -1,0 +1,12 @@
+{
+  "name": "challenge",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "marked": "^15.0.7",
+    "openai": "^4.87.3"
+  },
+  "devDependencies": {
+    "dotenv-webpack": "^8.1.0"
+  }
+}
