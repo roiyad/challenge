@@ -1,43 +1,38 @@
 # AI-Assisted Coding Helper
 
 ## Overview
-Design and build a Chrome extension that helps developers learn from coding problems on educational platforms like LeetCode. The extension should streamline the process of getting AI-generated assistance without requiring users to manually copy and paste problem details.
+**Mikasa** is an AI-powered assistant designed to help you improve your coding skills and solve programming challenges efficiently.
 
-## Core Requirements
-1. Automatically detect when a user is viewing a coding problem on LeetCode
-2. Create a solution that efficiently obtains AI assistance for solving the detected problem
-3. Present the AI-generated content in a user-friendly interface within the browser
+### Why Use Mikasa Instead of Directly Querying AI Models?
+While you could interact directly with models like OpenAI, Gemini, or Claude, Mikasa offers several advantages:
+- **Persistent Context**: Mikasa retains your current answer across page reloads, ensuring continuity in problem-solving.
+- **Guided Learning**: The chatbot is designed to **not** immediately give you the solution unless explicitly requested, encouraging deeper learning.
+- **Seamless Code Assistance**: Every time you send a message, Mikasa understands your current response and can guide you without requiring you to repeatedly copy and paste code.
 
-## Technical Considerations
-- The extension should be lightweight and performant
-- Implement secure handling of any API keys or user credentials
-- Create an intuitive user interface that enhances the learning experience
-- Consider browser capabilities that could simplify the implementation
+## Getting Started
+To install and run the Chrome extension, refer to this tutorial:
+[Chrome Extension Setup Guide](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world?hl=he)
 
-## AI Tool Usage Guidelines
+## How It Works
+The extension consists of two key components:
+1. **Content Script** – Runs the Chrome extension within the webpage.
+2. **Worker Script** – Handles communication with the OpenAI API.
 
-Candidates are encouraged to use AI coding assistants (such as GitHub Copilot, Claude, ChatGPT, Cursor, or other LLM-based tools) to help develop their solution. If you choose to leverage AI tools:
+### Worker Requests
+The worker processes four types of requests:
+1. **User API Response**: Handles questions asked by the user.
+2. **Question and Examples Storage**: Saves conversation history for context-aware responses.
+3. **User Code Submission**: Retains submitted code to maintain chat context.
+4. **Worker Keep-Alive Mechanism**: Since Chrome terminates inactive workers after 30 seconds, the system sends a **ping every 25 seconds** to keep the worker running.
 
-- Document the specific prompts you used when generating code with AI tools
-- Explain your process for refining and iterating on AI-generated content
-- Highlight which parts of your solution were developed with AI assistance versus written manually
-- Share any interesting insights about your experience using AI tools for this project
-- Include examples of when AI tools were particularly helpful or where they fell short
+---
 
-We're interested not just in your final solution, but in how you effectively collaborate with AI tools as part of your development workflow. There is no penalty for using AI assistants—on the contrary, thoughtful and efficient use of these tools demonstrates valuable skills in today's development environment.
 
-## Evaluation Criteria
-- Code quality and structure
-- Creative problem-solving approach
-- Effective use of AI tools in the solution
-- User experience considerations
-- Security and performance optimizations
-- Documentation quality
+### How to start the script
+1. First make sure your Chrome extension is working
+2. First you need an open AI security key 
+3. After you got it paste the key on row 7 in gpt_playground.js where it has written YOUR_OPENAI_API_KEY unmark the shadow 
+and you good to go
 
-## Deliverables
-- Full source code for the Chrome extension
-- Brief documentation explaining your approach, architecture decisions, and any assumptions made
-- Instructions for installation and testing
-- Short explanation of how you would extend this solution in the future
+Mikasa is designed to enhance your coding experience by providing **intelligent guidance** while ensuring that you stay engaged in the learning process!
 
-This challenge tests your ability to translate a product concept into a working solution while making thoughtful technical decisions and effectively leveraging AI technologies.
