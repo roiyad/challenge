@@ -30,7 +30,7 @@ The worker processes four types of requests:
 
 ### How to start the script
 1. First make sure your Chrome extension is working
-2. First you need an open AI security key 
+2. You need an open AI security key 
 3. After you got it paste the key on row 7 in gpt_playground.js where it has written YOUR_OPENAI_API_KEY unmark the shadow 
 and you good to go
 
