@@ -12,6 +12,7 @@ While you could interact directly with models like OpenAI, Gemini, or Claude, Mi
 ## Getting Started
 To install and run the Chrome extension, refer to this tutorial:
 [Chrome Extension Setup Guide](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world?hl=he)
+Very important do not use dark screen mode. The chat has problem with this mode it will be fixed
 
 ## How It Works
 The extension consists of two key components:
